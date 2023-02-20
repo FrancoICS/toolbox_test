@@ -32,6 +32,28 @@ const get_file = async (url) => {
 
 
 
+const get_files_list = async () => {
+
+    const data_files = await get_all_files('https://echo-serv.tbxnet.com/v1/secret/files').then(res => {return res})
+    const files_array = JSON.parse(data_files).files
+
+    const json_files = []
+    for (let i = 0; i < files_array.length; i++) {
+        const file = files_array[i]
+        const res_file = await get_file(`https://echo-serv.tbxnet.com/v1/secret/file/${String(file)}`).then(res => {return res})
+        if (res_file !== undefined){
+            json_files.push(JSON.parse(res_file))    
+            }
+        }
+
+    const data = (json_files)
+
+    return data
+} //cierre consumo api
+
+
+
+
 
 const check_csv = (file) => {
     //Variables que se ocuparan en la funcion
@@ -74,4 +96,4 @@ const check_csv = (file) => {
 
 
 
-module.exports = { get_all_files, get_file, check_csv };
+module.exports = { get_all_files, get_file,get_files_list, check_csv };
