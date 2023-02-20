@@ -6,15 +6,8 @@ const { json } = require('express')
 exports.FilesDataController = async (req, res) => {
     try{
         const fileName = req.query.fileName;
-  
         const data_files = await funciones.get_all_files('https://echo-serv.tbxnet.com/v1/secret/files').then(res => {return res})
-
-        const files_array = ''
-        if(data_files){
-            const files_array = JSON.parse(data_files).files
-        }
-        
-
+        const files_array = JSON.parse(data_files).files        
         const json_files = []
         for (let i = 0; i < files_array.length; i++) {
             const file = files_array[i]
